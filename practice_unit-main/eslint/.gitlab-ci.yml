@@ -1,8 +1,12 @@
 stages:
   - lint
 
-  lint:
-    stage: lint
-    script:
-      - npm install
-      - npx eslint
+lint-job:
+  stage: lint
+  image: node:18
+  script:
+    - npm install
+    - npx eslint . --ext .js
+  only:
+    - main
+    - merge_requests

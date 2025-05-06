@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 
 /**
  * The function takes an object with the student's answers and compares them with the correct answers.

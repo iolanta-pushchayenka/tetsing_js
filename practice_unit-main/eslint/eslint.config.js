@@ -6,7 +6,11 @@ module.exports = {
     globals: {
       browser: true,
       node: true,
+      mocha: true, 
     },
+    extends: [
+      'eslint:recommended',  // Используем базовые правила ESLint
+    ],
   },
   rules: {
     // Code style
