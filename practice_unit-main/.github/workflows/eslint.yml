@@ -4,10 +4,12 @@ on:
   push:
     branches:
       - main
+      - practice-2
   pull_request:
     branches:
       - main
       - dev
+      - practice-2 
 
 jobs:
   eslint:
