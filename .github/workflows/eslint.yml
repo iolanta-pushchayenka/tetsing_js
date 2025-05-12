@@ -9,7 +9,7 @@ on:
     branches:
       - main
       - dev
-      - practice-2 
+      - practice-2
 
 jobs:
   eslint:
@@ -26,7 +26,10 @@ jobs:
           node-version: 18
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci  
+
+      - name: Fix ESLint permission (Linux)
+        run: chmod +x ./node_modules/.bin/eslint
 
       - name: Run ESLint
-        run: npm run lint
+        run: npx eslint .
