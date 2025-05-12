@@ -8,7 +8,7 @@
     "test": "mocha --reporter mochawesome",
     "coverage": "c8 --reporter=html mocha",
     "prepare": "husky install",
-    "lint": "eslint ."
+    "lint": "npx eslint ."
   },
   "keywords": [],
   "author": "",
@@ -33,4 +33,5 @@
   "lint-staged": {
     "*.js": "eslint --fix"
   }
+
 }
