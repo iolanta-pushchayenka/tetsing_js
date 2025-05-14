@@ -30,7 +30,7 @@
 
 # Gradle and Maven with auto-import
 # When using Gradle or Maven with auto-import, you should exclude module files,
-# since they will be recreated, and may cause churn.  Uncomment if using
+# since they will be recreated, and may cause churn. Uncomment if using
 # auto-import.
 # .idea/artifacts
 # .idea/compiler.xml
@@ -82,9 +82,35 @@ fabric.properties
 # that are supposed to be shared within teams.
 
 .idea/*
-
 !.idea/codeStyles
 !.idea/runConfigurations
+
+### Node.js ###
+node_modules/
+
+# ESLint cache
+.eslintcache
+
+# Test coverage
+coverage/
+*.lcov
+
+# Mocha reports
+mochawesome-report/
+
+# Husky internal hook files
+.husky/_/
+
+# Env files
+.env
+.env.*.local
+
+# Babel (если используется компиляция)
+dist/
+build/
+
+# VSCode settings (если проект командный)
+.vscode/
 
 ### Windows ###
 # Windows thumbnail cache files
@@ -112,6 +138,5 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-# End of https://www.toptal.com/developers/gitignore/api/node,test,linux,macos,windows,calabash,sonarqube,visualstudiocode,webstorm+all
+# Temporary log files
 /special_logs.txt
-node_modules
