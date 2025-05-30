@@ -1,49 +1,49 @@
 # Practice 3. UI Testing
 
-Автоматизация UI тестирования сайта [demoqa.com](https://demoqa.com/) с использованием **Playwright**.
+Automating UI testing of a website [demoqa.com ](https://demoqa.com /) using **Playwright**.
 
 ---
 
-## Цель проекта
+## The purpose of the project
 
-Данный проект предназначен для автоматизации тестирования пользовательского интерфейса следующих страниц:
+This project is designed to automate testing of the user interface of the following pages:
 
-- [Alerts](https://demoqa.com/alerts) — проверка всех типов alert-ов.
-- [Practice Form](https://demoqa.com/automation-practice-form) — заполнение обязательных полей и проверка результата.
-- [Text Box](https://demoqa.com/text-box) — заполнение формы случайными данными и проверка вывода.
-- [Tool Tips](https://demoqa.com/tool-tips) — наведение на элементы и проверка текста tooltip-ов.
-- [Select Menu](https://demoqa.com/select-menu) — выбор опций из всех доступных списков.
+- [Alerts](https://demoqa.com/alerts ) — checking all types of alerts.
+- [Practice Form](https://demoqa.com/automation-practice-form ) — filling in the required fields and checking the result.
+- [Text Box](https://demoqa.com/text-box ) — filling out the form with random data and checking the output.
+- [Tool Tips](https://demoqa.com/tool-tips ) — pointing at elements and checking the text of tooltips.
+- [Select Menu](https://demoqa.com/select-menu ) — select options from all available lists.
 
 ---
 
-## Используемые технологии
+## Technologies used
 
 - Playwright
 - Faker
 - TypeScript
 - GitHub Actions — CI/CD
 - Playwright HTML Report 
-- Скриншоты при ошибках
+- Screenshots for errors
 
 ---
 
-## Структура проекта
+## Project structure
 
 ```bash
 .
-├── pageObject/       # Page Object Model (POM)
-├── tests/            # Тестовые сценарии
-├── playwright-report/ # Автоматически генерируемые отчеты после запуска
+├── PageObject/ # Page Object Model (POM)
+├── tests/ # Test scenarios
+├── playwright-report/ # Automatically generated reports after launch
 ├── playwright.config.ts
-└── README.md         # Документация проекта
+└── README.md # Project documentation
 
 ```
 
 
 
-##  Установка
+## Installation
 
-Клонировать репозиторий:
+Clone a repository:
 
 ```bash
 git clone https://github.com/iolanta-pushchayenka/tetsing_js.git
@@ -51,23 +51,22 @@ cd tetsing_js
 
 ```
 
-Установить зависимости:
+Install Dependencies:
 
 ```bash
 npm install
 
 ```
+## Running tests
 
-## Запуск тестов
-
-Запуск всех тестов:
+Running all the tests:
 
 ```bash
 
 npx playwright test tests
 ```
 
-Запуск отдельного теста:
+Running a separate test:
 
 ```bash
 
@@ -79,16 +78,15 @@ npx playwright test tests/select-menu.spec.ts
 
 ```
 
-## Отчеты
+## Reports
 
-После выполнения тестов:
+After running the tests:
 
-- Результаты можно найти в папке playwright-report.
+- The results can be found in the playwright-report folder.
 
-- При падении тестов автоматически сохраняются скриншоты.
+- Screenshots are automatically saved when the tests crash.
 
-### Открыть HTML-отчет:
+### Open the HTML report:
 
 ```bash
 npx playwright show-report
-

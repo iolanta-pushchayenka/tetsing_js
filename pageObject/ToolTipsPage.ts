@@ -18,6 +18,7 @@ export class ToolTipsPage {
   }
 
   async hoverOnButton() {
+    await expect(this.button).toBeVisible();
     await this.button.hover();
   }
 
@@ -30,10 +31,12 @@ export class ToolTipsPage {
   }
 
   async expectTooltipVisibleWithText(expectedText: string, timeout = 10000) {
-    await this.page.waitForSelector(`.tooltip-inner:has-text("${expectedText}")`, { state: 'visible', timeout });
-    const tooltipWithText = this.page.locator('.tooltip-inner', { hasText: expectedText });
-    await tooltipWithText.waitFor({ state: 'visible', timeout });
-    await expect(tooltipWithText).toBeVisible();
-    await expect(tooltipWithText).toHaveText(expectedText);
+    const tooltipLocator = this.page.locator('.tooltip-inner', { hasText: expectedText });
+ 
+    await this.page.waitForTimeout(500); 
+  
+    await expect(tooltipLocator).toBeVisible({ timeout });
+  
+    await expect(tooltipLocator).toHaveText(expectedText);
   }
 }
