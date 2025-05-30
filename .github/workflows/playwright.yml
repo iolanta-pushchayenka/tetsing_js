@@ -1,0 +1,33 @@
+name: Playwright Tests
+
+on:
+  schedule:
+    - cron: '0 20 * * *'
+  push:
+    branches: [ main, practice-3]
+  pull_request:
+    branches: [ main,  practice-3]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run Playwright tests
+        run: npm test
+
+      - name: Upload HTML Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: playwright-report
+          path: playwright-report
