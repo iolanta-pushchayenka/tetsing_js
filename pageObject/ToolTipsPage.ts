@@ -19,17 +19,21 @@ export class ToolTipsPage {
 
   async hoverOnButton() {
     await this.button.hover();
+    await this.page.waitForTimeout(500);
   }
 
   async hoverOnInput() {
     await this.inputField.hover();
+    await this.page.waitForTimeout(500);
   }
 
   async hoverOnText() {
     await this.contraryText.hover();
+    await this.page.waitForTimeout(500);
   }
 
   async expectTooltipVisibleWithText(expectedText: string, timeout = 10000) {
+    await this.page.waitForSelector(`.tooltip-inner:has-text("${expectedText}")`, { state: 'visible', timeout });
     const tooltipWithText = this.page.locator('.tooltip-inner', { hasText: expectedText });
     await tooltipWithText.waitFor({ state: 'visible', timeout });
     await expect(tooltipWithText).toBeVisible();
