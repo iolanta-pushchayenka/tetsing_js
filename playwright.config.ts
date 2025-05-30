@@ -3,33 +3,24 @@ import { defineConfig } from '@playwright/test'
 
 export default defineConfig({
   testDir: './tests',
-
-  // 🧪 Общий тайм-аут для одного теста (60 секунд вместо 30)
+  retries: 2,
+ 
   timeout: 60000,
 
 
-  // 🔄 Используемые параметры для каждой страницы и теста
+  
   use: {
     headless: true,
     screenshot: 'only-on-failure',
     
-
-    // Увеличиваем таймауты ожиданий
     actionTimeout: 15000,
-    navigationTimeout: 30000,
   },
 
 
-  // 📊 HTML отчет, сохраняется в /playwright-report
-  //reporter: [['html', { open: 'never' }]],
-
   reporter: [['html', { outputFolder: 'playwright-report', open: 'never' }]], 
   
-  // 🔁 Уменьшаем количество одновременно работающих процессов
   workers: 2, 
 
-
-  // 🌐 Кроссбраузерное тестирование
   projects: [
     {
       name: 'Chromium 1920x1080',

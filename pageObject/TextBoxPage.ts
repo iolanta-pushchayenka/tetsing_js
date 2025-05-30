@@ -18,7 +18,7 @@ export class TextBoxPage {
   }
 
   async navigate() {
-    await this.page.goto('https://demoqa.com/text-box', { waitUntil: 'load' });
+    await this.page.goto('https://demoqa.com/text-box', { timeout: 60000, waitUntil: 'domcontentloaded' });
   }
 
   async fillFullName(name: string) {
