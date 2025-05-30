@@ -25,7 +25,7 @@ export class FormPage {
   }) {
     const { firstName, lastName, email, gender, mobile } = user;
 
-    // ⏳ Ожидаем, что поля видимы перед вводом
+    
     await expect(this.page.locator(this.firstName)).toBeVisible();
     await this.page.fill(this.firstName, firstName);
 
