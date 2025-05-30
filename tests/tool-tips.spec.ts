@@ -4,15 +4,19 @@ import { ToolTipsPage } from '../pageObject/ToolTipsPage';
 test.describe('Tool Tips Page Tests', () => {
   test('Verify tooltips appear on hover', async ({ page }) => {
     const toolTipsPage = new ToolTipsPage(page);
-    await toolTipsPage.navigate();
+    await page.goto('https://your-site-url.com/tooltips');
 
-    await toolTipsPage.hoverOnButton();
-    await toolTipsPage.expectTooltipVisibleWithText('You hovered over the Button');
+    // Массив с ожидаемыми текстами и селекторами из pageObject
+    const tooltipsData = [
+      { selector: toolTipsPage.toolTipButton, expectedText: 'Tooltip for button' },
+      { selector: toolTipsPage.toolTipTextField, expectedText: 'Tooltip for text field' },
+      { selector: toolTipsPage.firstLink, expectedText: 'Tooltip for first link' },
+      { selector: toolTipsPage.secondLink, expectedText: 'Tooltip for second link' },
+    ];
 
-    await toolTipsPage.hoverOnInput();
-    await toolTipsPage.expectTooltipVisibleWithText('You hovered over the text field');
-
-    await toolTipsPage.hoverOnText();
-    await toolTipsPage.expectTooltipVisibleWithText('You hovered over the Contrary');
+    for (const { selector, expectedText } of tooltipsData) {
+      await toolTipsPage.expectTooltipVisibleWithTextOn(selector, expectedText);
+    }
   });
 });
+
