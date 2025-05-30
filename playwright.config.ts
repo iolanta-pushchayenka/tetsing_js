@@ -10,9 +10,9 @@ export default defineConfig({
 
   // 🔄 Используемые параметры для каждой страницы и теста
   use: {
-    headless: false,
+    headless: true,
     screenshot: 'only-on-failure',
-   
+    
 
     // Увеличиваем таймауты ожиданий
     actionTimeout: 15000,
