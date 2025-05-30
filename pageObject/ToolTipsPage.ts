@@ -19,17 +19,14 @@ export class ToolTipsPage {
 
   async hoverOnButton() {
     await this.button.hover();
-    await this.page.waitForTimeout(500);
   }
 
   async hoverOnInput() {
     await this.inputField.hover();
-    await this.page.waitForTimeout(500);
   }
 
   async hoverOnText() {
     await this.contraryText.hover();
-    await this.page.waitForTimeout(500);
   }
 
   async expectTooltipVisibleWithText(expectedText: string, timeout = 10000) {
