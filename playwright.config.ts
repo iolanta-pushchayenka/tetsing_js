@@ -8,7 +8,7 @@ export default defineConfig({
   use: {
     headless: true,
     screenshot: 'only-on-failure',
-    actionTimeout: 15000,
+   // actionTimeout: 15000,
   },
 
   reporter: [['html', { outputFolder: 'playwright-report', open: 'never' }]], 
@@ -45,17 +45,7 @@ export default defineConfig({
     },
 
     //Отладочный проект для ручного запуска
-    {
-      name: 'Debug Chromium',
-      use: {
-        browserName: 'chromium',
-        viewport: { width: 1920, height: 1080 },
-        headless: false,
-        launchOptions: {
-          slowMo: 100,
-        },
-      },
-    },
+    
   ],
 });
 
