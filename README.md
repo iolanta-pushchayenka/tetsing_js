@@ -90,3 +90,12 @@ After running the tests:
 
 ```bash
 npx playwright show-report
+
+
+# Review 06 02
+
+* Move all locators to the contstructors in Page Object
+* Remove slowMo - fit only for Each action (e.g. click, type, goto) is slowed down by 100 milliseconds.
+This allows you to observe the test execution in real time, which can be useful for debugging.
+* How to launch single scenario with key word (for example run) in chrome browser with resolution 1920x1080  
+* remove timeouts. use dinamyc waiters 

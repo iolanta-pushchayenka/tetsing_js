@@ -5,7 +5,7 @@ import { AlertsPage } from '../pageObject/AlertsPage';
 test.describe('Alerts Page Tests', () => {
   test('Check all alerts', async ({ page }) => {
 
-    
+
     const alertsPage = new AlertsPage(page);
     await alertsPage.goto();
 
@@ -13,5 +13,6 @@ test.describe('Alerts Page Tests', () => {
     await alertsPage.clickTimerAlertButton();
     await alertsPage.clickConfirmButton();
     await alertsPage.clickPromptButton();
+    //TODO Where is excetions?
   });
 });
