@@ -1,25 +1,18 @@
 import { defineConfig } from '@playwright/test'
 
-
 export default defineConfig({
   testDir: './tests',
   retries: 2,
- 
   timeout: 120000,
 
-
-  
   use: {
     headless: true,
     screenshot: 'only-on-failure',
-    
     actionTimeout: 15000,
   },
 
-
   reporter: [['html', { outputFolder: 'playwright-report', open: 'never' }]], 
-  
-  workers: 2, 
+  workers: 2,
 
   projects: [
     {
@@ -34,9 +27,6 @@ export default defineConfig({
       use: {
         browserName: 'chromium',
         viewport: { width: 1366, height: 768 },
-        launchOptions: {
-          slowMo: 100,
-        },
       },
     },
     {
@@ -44,9 +34,6 @@ export default defineConfig({
       use: {
         browserName: 'firefox',
         viewport: { width: 1920, height: 1080 },
-        launchOptions: {
-          slowMo: 100,
-        },
       },
     },
     {
@@ -54,6 +41,16 @@ export default defineConfig({
       use: {
         browserName: 'firefox',
         viewport: { width: 1366, height: 768 },
+      },
+    },
+
+    //Отладочный проект для ручного запуска
+    {
+      name: 'Debug Chromium',
+      use: {
+        browserName: 'chromium',
+        viewport: { width: 1920, height: 1080 },
+        headless: false,
         launchOptions: {
           slowMo: 100,
         },
@@ -61,3 +58,4 @@ export default defineConfig({
     },
   ],
 });
+

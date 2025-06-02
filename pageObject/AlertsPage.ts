@@ -20,13 +20,12 @@ export class AlertsPage {
   }
 
   async goto() {
-    await this.page.goto('https://demoqa.com/alerts', { timeout: 60000, waitUntil: 'domcontentloaded' });
+    await this.page.goto('https://demoqa.com/alerts', {waitUntil: 'domcontentloaded' }); 
   }
 
   async clickAlertButton() {
     await this.alertButton.waitFor({ state: 'visible' });
     await this.alertButton.click();
-    //await this.alertButton.click();
   }
 
   async clickTimerAlertButton() {

@@ -4,7 +4,9 @@ import { SelectMenuPage } from '../pageObject/SelectPage';
 test.describe('Select Menu Tests', () => {
   test('Cover functionality with dropdowns', async ({ page }) => {
     const selectMenuPage = new SelectMenuPage(page);
-    await page.goto('https://demoqa.com/select-menu');
+   // await page.goto('https://demoqa.com/select-menu'); 
+
+   await selectMenuPage.goto();
 
     // Select Value: Group 2, option 1
     await selectMenuPage.selectFromSelectValue('Group 2, option 1');
@@ -26,5 +28,11 @@ test.describe('Select Menu Tests', () => {
     const selectedMulti = await selectMenuPage.getSelectedMultiSelectDropDownValues();
     expect(selectedMulti).toContain('Black');
     expect(selectedMulti).toContain('Blue');
+
+    // Select cars: volvo, audi
+await selectMenuPage.selectMultipleCars(['volvo', 'audi']);
+const selectedCars = await selectMenuPage.getSelectedCarsValues();
+expect(selectedCars).toEqual(expect.arrayContaining(['Volvo', 'Audi']));
+
   });
 });
