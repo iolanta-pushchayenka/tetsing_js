@@ -75,6 +75,27 @@ npx playwright test tests/form.spec.ts
 npx playwright test tests/text-box.spec.ts
 npx playwright test tests/tool-tips.spec.ts
 npx playwright test tests/select-menu.spec.ts
+```
+
+
+Running tests by keyword and screen resolution:
+
+```bash
+
+npm run test -- --grep "alert" --project="Chromium 1920x1080"
+npm run test -- --grep "alert" --project="Firefox 1366x768"
+
+npm run test -- --grep "submit form" --project="Chromium 1920x1080"
+npm run test -- --grep "submit form" --project="Firefox 1366x768"
+
+npm run test -- --grep "Cover functionality" --project="Chromium 1920x1080"
+npm run test -- --grep "Cover functionality" --project="Firefox 1366x768"
+
+npm run test -- --grep "Fill form" --project="Chromium 1920x1080"
+npm run test -- --grep "Fill form" --project="Firefox 1366x768"
+
+npm run test -- --grep "Verify tooltips" --project="Chromium 1920x1080"
+npm run test -- --grep "Verify tooltips" --project="Firefox 1366x768"
 
 ```
 
