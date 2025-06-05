@@ -36,12 +36,12 @@ export class ToolTipsPage {
     await expect(this.contraryText).toBeVisible();
     await this.contraryText.hover();
   }
-
+//TODO remove locator to the constructor
   async expectTooltipVisibleWithText(expectedText: string) {
    await this.page.waitForSelector('.tooltip-inner', { state: 'visible' });
-    
+
     const tooltipLocator = this.tooltipText.filter({ hasText: expectedText });
-    await expect(tooltipLocator).toBeVisible(); 
+    await expect(tooltipLocator).toBeVisible();
     await expect(tooltipLocator).toHaveText(expectedText);
   }
 }

@@ -111,3 +111,11 @@ After running the tests:
 
 ```bash
 npx playwright show-report
+```
+
+# Review
+* Remove russian language from 
+* It has been observed that there is inconsistency in the structure of the tests. While some validations and assertions are implemented within the Page Object Model (POM), others are directly written in the test files. This inconsistency can lead to confusion, reduced maintainability, and difficulty in scaling the test suite.
+* The tests are not parameterized, which limits their flexibility and reusability. For example, hardcoding values such as window sizes or test data can lead to duplication and make the tests harder to adapt to different scenarios or environments.
+* Parallel execution is not properly configured, which means the tests are not utilizing the full potential of Playwright’s parallelism. This could lead to longer test execution times and reduced efficiency.
+* Hardcoding window sizes in the tests reduces flexibility and makes it harder to test responsiveness across different screen sizes.

@@ -21,6 +21,10 @@ export class SelectMenuPage {
     this.oldSelectMenuDropdown = page.locator('#oldSelectMenu');
     this.carsDropdown = page.locator('#cars');
     this.multiSelectInput = page.locator('#react-select-4-input');
+    // TODO Classes like css-1rhbuit-multiValue and css-12jo7m5 are likely generated automatically by a library
+    // (such as styled-components, Emotion, or another CSS-in-JS library). They may change when the library is
+    // updated or when the styles change, even if the HTML structure remains the same. This makes tests brittle,
+    // as they may break with the slightest change in styles.
     this.multiSelectValues = page.locator('.css-1rhbuit-multiValue .css-12jo7m5');
     this.menu = page.locator('.css-26l3qy-menu');
 
@@ -33,7 +37,7 @@ export class SelectMenuPage {
   }
 
   async goto() {
-    await this.page.goto('https://demoqa.com/select-menu', {waitUntil: 'domcontentloaded' }); 
+    await this.page.goto('https://demoqa.com/select-menu', {waitUntil: 'domcontentloaded' });
   }
 
 
@@ -93,7 +97,7 @@ export class SelectMenuPage {
   async getSelectedMultiSelectDropDownValues() {
     return (await this.multiSelectValues.allTextContents()).map((v) => v.trim());
   }
-
+//TODO remove locator to the constructor
   async selectMultipleCars(options: string[]) {
     await expect(this.carsDropdown).toBeVisible();
     for (const option of options) {

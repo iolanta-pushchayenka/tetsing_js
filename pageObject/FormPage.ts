@@ -20,7 +20,7 @@ export class FormPage {
     this.modal = page.locator('.modal-content');
     this.modalHeader = page.locator('#example-modal-sizes-title-lg');
   }
-
+//TODO remove locator to the constructor
   private genderRadio = (label: number): Locator =>
     this.page.locator(`label[for="gender-radio-${label}"]`);
 
