@@ -1,4 +1,4 @@
-import { Page, expect, Locator } from '@playwright/test';
+import { Page, Locator } from '@playwright/test';
 
 export class FormPage {
   private url = 'https://demoqa.com/automation-practice-form';
@@ -10,6 +10,8 @@ export class FormPage {
   private submitButton: Locator;
   private modal: Locator;
   private modalHeader: Locator;
+  private genderRadio: (label: number) => Locator;
+  private modalValueCell: (label: string) => Locator;
 
   constructor(private page: Page) {
     this.firstNameInput = page.locator('#firstName');
@@ -19,13 +21,11 @@ export class FormPage {
     this.submitButton = page.locator('#submit');
     this.modal = page.locator('.modal-content');
     this.modalHeader = page.locator('#example-modal-sizes-title-lg');
+    this.genderRadio = (label: number) =>
+      this.page.locator(`label[for="gender-radio-${label}"]`);
+    this.modalValueCell = (label: string) =>
+      this.page.locator('td', { hasText: label }).locator('xpath=following-sibling::td');
   }
-
-  private genderRadio = (label: number): Locator =>
-    this.page.locator(`label[for="gender-radio-${label}"]`);
-
-  private modalValueCell = (label: string): Locator =>
-    this.page.locator('td', { hasText: label }).locator('xpath=following-sibling::td');
 
   async navigate() {
     await this.page.goto(this.url, { waitUntil: 'domcontentloaded' });
@@ -38,51 +38,28 @@ export class FormPage {
     gender: number;
     mobile: string;
   }) {
-    const { firstName, lastName, email, gender, mobile } = user;
-
-    await expect(this.firstNameInput).toBeVisible();
-    await this.firstNameInput.fill(firstName);
-
-    await expect(this.lastNameInput).toBeVisible();
-    await this.lastNameInput.fill(lastName);
-
-    await expect(this.emailInput).toBeVisible();
-    await this.emailInput.fill(email);
-
-    const genderOption = this.genderRadio(gender);
-    await expect(genderOption).toBeVisible();
-    await genderOption.click();
-
-    await expect(this.mobileInput).toBeVisible();
-    await this.mobileInput.fill(mobile);
+    await this.firstNameInput.fill(user.firstName);
+    await this.lastNameInput.fill(user.lastName);
+    await this.emailInput.fill(user.email);
+    await this.genderRadio(user.gender).click();
+    await this.mobileInput.fill(user.mobile);
   }
 
   async submitForm() {
-    await expect(this.submitButton).toBeVisible();
     await this.submitButton.click();
   }
 
-  async checkModal(user: {
-    firstName: string;
-    lastName: string;
-    email: string;
-    gender: number;
-    mobile: string;
-  }) {
-    await expect(this.modal).toBeVisible();
-    await expect(this.modalHeader).toHaveText('Thanks for submitting the form');
+  // Геттеры для теста
+  getModal() {
+    return this.modal;
+  }
 
-    const fieldMap = {
-      'Student Name': `${user.firstName} ${user.lastName}`,
-      'Student Email': user.email,
-      Gender: user.gender === 1 ? 'Male' : user.gender === 2 ? 'Female' : 'Other',
-      Mobile: user.mobile,
-    };
+  getModalHeader() {
+    return this.modalHeader;
+  }
 
-    for (const [label, expectedValue] of Object.entries(fieldMap)) {
-      const cell = this.modalValueCell(label);
-      await expect(cell).toHaveText(expectedValue);
-    }
+  getModalValue(label: string) {
+    return this.modalValueCell(label);
   }
 }
 

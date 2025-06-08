@@ -1,16 +1,13 @@
-import { Page, Locator, expect } from '@playwright/test';
+import { Page, Locator } from '@playwright/test';
 
 export class TextBoxPage {
   readonly page: Page;
-
-  // Вывод
   readonly output: Locator;
   readonly nameOutput: Locator;
   readonly emailOutput: Locator;
   readonly currentAddressOutput: Locator;
   readonly permanentAddressOutput: Locator;
 
-  // Поля формы
   private readonly nameInput: Locator;
   private readonly emailInput: Locator;
   private readonly currentAddressInput: Locator;
@@ -41,48 +38,44 @@ export class TextBoxPage {
   }
 
   async fillFullName(name: string) {
-    await expect(this.nameInput).toBeVisible();
     await this.nameInput.fill(name);
   }
 
   async fillEmail(email: string) {
-    await expect(this.emailInput).toBeVisible();
     await this.emailInput.fill(email);
   }
 
   async fillCurrentAddress(address: string) {
-    await expect(this.currentAddressInput).toBeVisible();
     await this.currentAddressInput.fill(address);
   }
 
   async fillPermanentAddress(address: string) {
-    await expect(this.permanentAddressInput).toBeVisible();
     await this.permanentAddressInput.fill(address);
   }
 
   async submitForm() {
-    await expect(this.submitBtn).toBeVisible();
     await this.submitBtn.click();
   }
 
-  async expectOutputVisible() {
-    await expect(this.output).toBeVisible();
+  // Методы получения значений из output
+  async isOutputVisible(): Promise<boolean> {
+    return await this.output.isVisible();
   }
 
-  async expectNameToBe(name: string) {
-    await expect(this.nameOutput).toHaveText(`Name:${name}`);
+  async getNameOutput(): Promise<string> {
+    return (await this.nameOutput.textContent())?.trim() ?? '';
   }
 
-  async expectEmailToBe(email: string) {
-    await expect(this.emailOutput).toHaveText(`Email:${email}`);
+  async getEmailOutput(): Promise<string> {
+    return (await this.emailOutput.textContent())?.trim() ?? '';
   }
 
-  async expectCurrentAddressToBe(address: string) {
-    await expect(this.currentAddressOutput).toHaveText(`Current Address :${address}`);
+  async getCurrentAddressOutput(): Promise<string> {
+    return (await this.currentAddressOutput.textContent())?.trim() ?? '';
   }
 
-  async expectPermanentAddressToBe(address: string) {
-    await expect(this.permanentAddressOutput).toHaveText(`Permananet Address :${address}`);
+  async getPermanentAddressOutput(): Promise<string> {
+    return (await this.permanentAddressOutput.textContent())?.trim() ?? '';
   }
 }
 

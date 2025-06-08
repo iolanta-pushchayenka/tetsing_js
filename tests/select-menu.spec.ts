@@ -1,38 +1,50 @@
 import { test, expect } from '@playwright/test';
 import { SelectMenuPage } from '../pageObject/SelectPage';
 
+const selectMenuTestCases = [
+  {
+    description: 'Select Value: Group 2, option 1',
+    selectMethod: 'selectFromSelectValue',
+    getValueMethod: 'getSelectedSelectValue',
+    expected: 'Group 2, option 1',
+  },
+  {
+    description: 'Select One: Other',
+    selectMethod: 'selectFromSelectOne',
+    getValueMethod: 'getSelectedSelectOneValue',
+    expected: 'Other',
+  },
+  {
+    description: 'Old Select Menu: Green',
+    selectMethod: 'selectFromOldSelectMenuByText',
+    getValueMethod: 'getSelectedOldSelectMenuValue',
+    expected: 'Green',
+  },
+];
+
+const multiSelectOptions = ['Black', 'Blue'];
+const carSelectOptions = ['volvo', 'audi'];
+const expectedCarLabels = ['Volvo', 'Audi'];
+
 test.describe('Select Menu Tests', () => {
-  test('Cover functionality with dropdowns', async ({ page }) => {
+  test('Verify dropdowns using clean POM structure', async ({ page }) => {
     const selectMenuPage = new SelectMenuPage(page);
-   // await page.goto('https://demoqa.com/select-menu'); 
+    await selectMenuPage.goto();
 
-   await selectMenuPage.goto();
+    for (const { description, selectMethod, getValueMethod, expected } of selectMenuTestCases) {
+      await selectMenuPage[selectMethod](expected);
+      const actual = await selectMenuPage[getValueMethod]();
+      expect(actual).toBe(expected);
+    }
 
-    // Select Value: Group 2, option 1
-    await selectMenuPage.selectFromSelectValue('Group 2, option 1');
-    const selectedValue = await selectMenuPage.getSelectedSelectValue();
-    expect(selectedValue?.trim()).toBe('Group 2, option 1');
-
-    // Select One: Other
-    await selectMenuPage.selectFromSelectOne('Other');
-    const selectedOne = await selectMenuPage.getSelectedSelectOneValue();
-    expect(selectedOne?.trim()).toBe('Other');
-
-    // Old Style Select Menu: Green
-    await selectMenuPage.selectFromOldSelectMenuByText('Green');
-    const selectedOld = await selectMenuPage.getSelectedOldSelectMenuValue();
-    expect(selectedOld?.trim()).toBe('Green');
-
-    // Multiselect Drop Down: Black, Blue
-    await selectMenuPage.selectFromMultiSelectDropDown(['Black', 'Blue']);
+    await selectMenuPage.selectFromMultiSelectDropDown(multiSelectOptions);
     const selectedMulti = await selectMenuPage.getSelectedMultiSelectDropDownValues();
-    expect(selectedMulti).toContain('Black');
-    expect(selectedMulti).toContain('Blue');
+    for (const color of multiSelectOptions) {
+      expect(selectedMulti).toContain(color);
+    }
 
-    // Select cars: volvo, audi
-await selectMenuPage.selectMultipleCars(['volvo', 'audi']);
-const selectedCars = await selectMenuPage.getSelectedCarsValues();
-expect(selectedCars).toEqual(expect.arrayContaining(['Volvo', 'Audi']));
-
+    await selectMenuPage.selectMultipleCars(carSelectOptions);
+    const selectedCars = await selectMenuPage.getSelectedCarsValues();
+    expect(selectedCars).toEqual(expect.arrayContaining(expectedCarLabels));
   });
 });

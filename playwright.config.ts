@@ -1,51 +1,25 @@
-import { defineConfig } from '@playwright/test'
+import { defineConfig } from '@playwright/test';
+
+const viewports = [
+  { width: 1920, height: 1080 },
+  { width: 1366, height: 768 },
+];
+
+const browsers = ['chromium', 'firefox'] as const;
+
+const projects = browsers.flatMap(browser =>
+  viewports.map(viewport => ({
+    name: `${browser} ${viewport.width}x${viewport.height}`,
+    use: { browserName: browser, viewport },
+  }))
+);
 
 export default defineConfig({
   testDir: './tests',
   retries: 2,
   timeout: 120000,
-
-  use: {
-    headless: true,
-    screenshot: 'only-on-failure',
-   // actionTimeout: 15000,
-  },
-
-  reporter: [['html', { outputFolder: 'playwright-report', open: 'never' }]], 
-  workers: 2,
-
-  projects: [
-    {
-      name: 'Chromium 1920x1080',
-      use: {
-        browserName: 'chromium',
-        viewport: { width: 1920, height: 1080 },
-      },
-    },
-    {
-      name: 'Chromium 1366x768',
-      use: {
-        browserName: 'chromium',
-        viewport: { width: 1366, height: 768 },
-      },
-    },
-    {
-      name: 'Firefox 1920x1080',
-      use: {
-        browserName: 'firefox',
-        viewport: { width: 1920, height: 1080 },
-      },
-    },
-    {
-      name: 'Firefox 1366x768',
-      use: {
-        browserName: 'firefox',
-        viewport: { width: 1366, height: 768 },
-      },
-    },
-
-    //Отладочный проект для ручного запуска
-    
-  ],
+  use: { headless: true, screenshot: 'only-on-failure' },
+  reporter: [['html', { outputFolder: 'playwright-report', open: 'never' }]],
+  workers: process.env.CI ? 4 : undefined,
+  projects,
 });
-

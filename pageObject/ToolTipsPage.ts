@@ -1,4 +1,4 @@
-import { Page, Locator, expect } from '@playwright/test';
+import { Page, Locator } from '@playwright/test';
 
 export class ToolTipsPage {
   readonly page: Page;
@@ -23,25 +23,30 @@ export class ToolTipsPage {
   }
 
   async hoverOnButton() {
-    await expect(this.button).toBeVisible();
     await this.button.hover();
   }
 
   async hoverOnInput() {
-    await expect(this.inputField).toBeVisible();
     await this.inputField.hover();
   }
 
   async hoverOnText() {
-    await expect(this.contraryText).toBeVisible();
     await this.contraryText.hover();
   }
 
-  async expectTooltipVisibleWithText(expectedText: string) {
-   await this.page.waitForSelector('.tooltip-inner', { state: 'visible' });
-    
-    const tooltipLocator = this.tooltipText.filter({ hasText: expectedText });
-    await expect(tooltipLocator).toBeVisible(); 
-    await expect(tooltipLocator).toHaveText(expectedText);
+  async waitForTooltipText(expectedText: string) {
+    await this.page.waitForFunction(
+      (text) => {
+        const tooltip = document.querySelector('.tooltip-inner');
+        return tooltip?.textContent === text;
+      },
+      expectedText
+    );
+  }
+  
+  
+
+  async getTooltipText() {
+    return await this.tooltipText.textContent();
   }
 }

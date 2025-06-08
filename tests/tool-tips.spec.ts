@@ -1,19 +1,42 @@
-import { test } from '@playwright/test';
+import { test, expect } from '@playwright/test';
 import { ToolTipsPage } from '../pageObject/ToolTipsPage';
 
+type TooltipTestData = {
+  description: string;
+  hoverMethod: keyof ToolTipsPage;
+  expectedText: string;
+};
+
+const tooltipTestCases: TooltipTestData[] = [
+  {
+    description: 'button tooltip',
+    hoverMethod: 'hoverOnButton',
+    expectedText: 'You hovered over the Button',
+  },
+  {
+    description: 'input tooltip',
+    hoverMethod: 'hoverOnInput',
+    expectedText: 'You hovered over the text field',
+  },
+  {
+    description: 'text tooltip',
+    hoverMethod: 'hoverOnText',
+    expectedText: 'You hovered over the Contrary',
+  },
+];
+
 test.describe('Tool Tips Page Tests', () => {
-  test('Verify tooltips appear on hover', async ({ page }) => {
-    const toolTipsPage = new ToolTipsPage(page);
-    await toolTipsPage.navigate();
+  for (const { description, hoverMethod, expectedText } of tooltipTestCases) {
+    test(`Verify tooltip appears on hover: ${description}`, async ({ page }) => {
+      const toolTipsPage = new ToolTipsPage(page);
+      await toolTipsPage.navigate();
 
-    await toolTipsPage.hoverOnButton();
-    await toolTipsPage.expectTooltipVisibleWithText('You hovered over the Button');
+      await toolTipsPage[hoverMethod]();
+      await toolTipsPage.waitForTooltipText(expectedText);
+      const tooltipText = await toolTipsPage.getTooltipText();
 
-    await toolTipsPage.hoverOnInput();
-    await toolTipsPage.expectTooltipVisibleWithText('You hovered over the text field');
-
-    await toolTipsPage.hoverOnText();
-    await toolTipsPage.expectTooltipVisibleWithText('You hovered over the Contrary');
-  });
-}); 
+      expect(tooltipText).toBe(expectedText);
+    });
+  }
+});
 
