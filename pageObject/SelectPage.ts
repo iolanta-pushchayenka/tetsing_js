@@ -22,14 +22,10 @@ export class SelectMenuPage {
     this.carsDropdown = page.locator('#cars');
     this.multiSelectInput = page.locator('#react-select-4-input');
     this.multiSelectValues = page.locator('#selectMenuContainer [class*="multiValue"]');
-    this.menu = page.locator('.css-26l3qy-menu');
-    //this.multiSelectValues = page.locator('.css-1rhbuit-multiValue .css-12jo7m5');
-    //this.multiSelectValues = page.locator('[class*="multiValue"] div'); 
-    //this.menu = page.locator('div[id^="react-select"] >> div[role="listbox"]');
-    //this.menu = page.locator('div[id^="react-select"] >> div[role="listbox"]');
-
-
-
+  
+    
+    this.menu = page.locator('.css-26l3qy-menu'); 
+  
     this.selectValueSingleValue = this.selectValueDropdown.locator('[class*="singleValue"]');
     this.selectOneSingleValue = this.selectOneDropdown.locator('[class*="singleValue"]');
     this.oldSelectMenuSelectedOption = this.oldSelectMenuDropdown.locator('option:checked');
@@ -37,7 +33,7 @@ export class SelectMenuPage {
       this.oldSelectMenuDropdown.locator('option', { hasText: text });
     this.menuOptionByText = (text: string) => this.menu.locator(`text=${text}`);
   }
-
+  
   async goto() {
     await this.page.goto('https://demoqa.com/select-menu', { waitUntil: 'domcontentloaded' });
   }
@@ -94,4 +90,3 @@ export class SelectMenuPage {
     return selected.map(v => v.trim());
   }
 }
-

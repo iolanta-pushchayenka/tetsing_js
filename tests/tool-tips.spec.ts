@@ -3,7 +3,7 @@ import { ToolTipsPage } from '../pageObject/ToolTipsPage';
 
 type TooltipTestData = {
   description: string;
-  hoverMethod: keyof ToolTipsPage;
+  hoverMethod: 'hoverOnButton' | 'hoverOnInput' | 'hoverOnText';
   expectedText: string;
 };
 
