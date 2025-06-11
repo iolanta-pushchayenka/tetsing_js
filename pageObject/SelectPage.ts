@@ -22,70 +22,81 @@ export class SelectMenuPage {
     this.carsDropdown = page.locator('#cars');
     this.multiSelectInput = page.locator('#react-select-4-input');
     this.multiSelectValues = page.locator('#selectMenuContainer [class*="multiValue"]');
-  
-    
-    this.menu = page.locator('.css-26l3qy-menu'); 
-  
+
+    this.menu = page.locator('div[class*="-menu"]');
+    this.menuOptionByText = (text: string) => this.menu.locator(`div[class*="-option"]:has-text("${text}")`);
+
     this.selectValueSingleValue = this.selectValueDropdown.locator('[class*="singleValue"]');
     this.selectOneSingleValue = this.selectOneDropdown.locator('[class*="singleValue"]');
     this.oldSelectMenuSelectedOption = this.oldSelectMenuDropdown.locator('option:checked');
     this.oldSelectMenuOptionByText = (text: string) =>
       this.oldSelectMenuDropdown.locator('option', { hasText: text });
-    this.menuOptionByText = (text: string) => this.menu.locator(`text=${text}`);
   }
-  
-  async goto() {
+
+  async goto(): Promise<void> {
     await this.page.goto('https://demoqa.com/select-menu', { waitUntil: 'domcontentloaded' });
   }
 
-  async selectFromSelectValue(optionText: string) {
+  async selectFromSelectValue(optionText: string): Promise<void> {
+    await this.selectValueDropdown.waitFor({ state: 'visible' });
     await this.selectValueDropdown.click();
-    await this.menuOptionByText(optionText).click();
+    const option = this.menuOptionByText(optionText);
+    await option.waitFor({ state: 'visible' });
+    await option.click();
   }
 
-  async getSelectedSelectValue() {
+  async getSelectedSelectValue(): Promise<string> {
     const text = await this.selectValueSingleValue.textContent();
     return text?.trim() ?? '';
   }
 
-  async selectFromSelectOne(optionText: string) {
+  async selectFromSelectOne(optionText: string): Promise<void> {
+    await this.selectOneDropdown.waitFor({ state: 'visible' });
     await this.selectOneDropdown.click();
-    await this.menuOptionByText(optionText).click();
+    const option = this.menuOptionByText(optionText);
+    await option.waitFor({ state: 'visible' });
+    await option.click();
   }
 
-  async getSelectedSelectOneValue() {
+  async getSelectedSelectOneValue(): Promise<string> {
     const text = await this.selectOneSingleValue.textContent();
     return text?.trim() ?? '';
   }
 
-  async selectFromOldSelectMenuByText(optionText: string) {
+  async selectFromOldSelectMenuByText(optionText: string): Promise<void> {
     const option = this.oldSelectMenuOptionByText(optionText);
     const value = await option.evaluate(el => (el as HTMLOptionElement)?.value);
     if (!value) throw new Error(`Option "${optionText}" not found`);
+    await this.oldSelectMenuDropdown.waitFor({ state: 'visible' });
     await this.oldSelectMenuDropdown.selectOption(value);
   }
 
-  async getSelectedOldSelectMenuValue() {
+  async getSelectedOldSelectMenuValue(): Promise<string> {
     const text = await this.oldSelectMenuSelectedOption.textContent();
     return text?.trim() ?? '';
   }
 
-  async selectFromMultiSelectDropDown(options: string[]) {
+  async selectFromMultiSelectDropDown(options: string[]): Promise<void> {
     for (const optionText of options) {
+      await this.multiSelectInput.waitFor({ state: 'visible' });
       await this.multiSelectInput.fill(optionText);
-      await this.menuOptionByText(optionText).click();
+      const option = this.menuOptionByText(optionText);
+      await option.waitFor({ state: 'visible' });
+      await option.click();
     }
   }
 
-  async getSelectedMultiSelectDropDownValues() {
-    return (await this.multiSelectValues.allTextContents()).map((v) => v.trim());
+  async getSelectedMultiSelectDropDownValues(): Promise<string[]> {
+    const texts = await this.multiSelectValues.allTextContents();
+    return texts.map((v) => v.trim());
   }
 
-  async selectMultipleCars(options: string[]) {
+  async selectMultipleCars(options: string[]): Promise<void> {
+    await this.carsDropdown.waitFor({ state: 'visible' });
     await this.carsDropdown.selectOption(options);
   }
 
-  async getSelectedCarsValues() {
+  async getSelectedCarsValues(): Promise<string[]> {
     const selected = await this.carsDropdown.locator('option:checked').allTextContents();
     return selected.map(v => v.trim());
   }
