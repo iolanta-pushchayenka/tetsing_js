@@ -1,0 +1,20 @@
+{
+  "name": "demoqa-tests",
+  "version": "1.0.0",
+  "description": "This homework project involves implementing UI tests using [Playwright](https://playwright.dev) for the demo website  \r [https://demoqa.com](https://demoqa.com). The project is structured following the **Page Object Model (POM)**.  \r It includes **cross-browser** and **parallel test execution**, **HTML report generation**, and **automatic screenshots** on failures.",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^9.8.0",
+    "@playwright/test": "^1.52.0",
+    "@types/node": "^22.15.30"
+  },
+  "scripts": {
+    "test": "playwright test --reporter=html"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
